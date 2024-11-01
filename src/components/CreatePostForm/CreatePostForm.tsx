@@ -14,12 +14,14 @@ import { alertActions } from "../../store/redux/AlertSlice/AlertSlice";
 
 import {
   StyledLable,
-  StyledPostCard,
+  StyledPostForm,
   ButtonWraper,
 } from "../../components/CreatePostForm/styles";
 import { PagesPaths } from "../../components/Layout/types";
 
 function CreatePostForm() {
+  const userId: number = useAppSelector(signInSelectors.user).id;
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [file, setFile] = useState<File>(); //
@@ -35,21 +37,27 @@ function CreatePostForm() {
       .max(200, "Description should not be longer as 200 symbols"),
   });
 
-  const userId: number = useAppSelector(signInSelectors.user).id;
-
   const formik = useFormik({
     initialValues: {
       userId: { userId },
       subject: "",
       header: "",
       description: "",
-      photoLink: "",
+      image: undefined,
     },
 
     validationSchema: validationSchema,
     validateOnChange: false,
 
     onSubmit: async (values, helpers) => {
+// const formData:FormData = new FormData()
+
+// formData.append("userId", `${userId}`)
+// formData.append("subject", values.subject)
+// formData.append("description", values.description)
+// formData.append("image", file)
+
+
       try {
         const response = await axios.post(
           "/api/posts",
@@ -58,11 +66,11 @@ function CreatePostForm() {
             subject: values.subject,
             header: values.header,
             description: values.description,
-            photoLink: values.photoLink,
+            image: file,
           },
           {
             headers: {
-              "Content-Type": "application/JSON",
+              "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
@@ -100,26 +108,7 @@ function CreatePostForm() {
       setFile(selectedPhoto[0]);
       const names = selectedPhoto[0].name;
       setFileName(names);
-      try {
-        const response = await axios.post("/api/files", file, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        formik.setFieldValue("photoLink", response.data.message);
-        console.log(formik.values.photoLink);
-      } catch (e: any) {
-        const error = e.response.data;
-
-        dispatch(
-          alertActions.setAlertStateOpen({
-            isOpen: true,
-            severity: "error",
-            children: error.errorMessage,
-          })
-        );
-      }
+      formik.setFieldValue("image", file);
     }
   };
   const handleUploadClick = () => {
@@ -128,7 +117,7 @@ function CreatePostForm() {
 
   return (
     <>
-      <StyledPostCard onSubmit={formik.handleSubmit}>
+      <StyledPostForm onSubmit={formik.handleSubmit}>
         <StyledLable>Create Post</StyledLable>
         <RadioGroupComp row={true} name="subject" onCange={formik.handleChange}>
           <RadioButton value="NEED HELP" lable="Need Help" />
@@ -140,6 +129,7 @@ function CreatePostForm() {
           label="Headline"
           onChange={formik.handleChange}
           error={formik.errors.header}
+          value={formik.values.header}
         />
 
         <Input
@@ -149,6 +139,7 @@ function CreatePostForm() {
           multiline
           rows={5}
           error={formik.errors.description}
+          value={formik.values.description}
         />
 
         {/* Кнопка загрузки файлов */}
@@ -163,12 +154,12 @@ function CreatePostForm() {
           </Button>
           <input
             id="photo-upload"
-            name="photoLink"
+            name="image"
             type="file"
             onChange={handleFileChange}
             style={{ display: "none" }}
             accept="image/*"
-            value={file?.name}
+            value={formik.values.image}
           />
           {}
         </label>
@@ -189,8 +180,9 @@ function CreatePostForm() {
             Send
           </Button>
         </ButtonWraper>
-      </StyledPostCard>
+      </StyledPostForm>
     </>
   );
 }
+
 export default CreatePostForm;
