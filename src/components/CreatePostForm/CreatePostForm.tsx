@@ -50,14 +50,6 @@ function CreatePostForm() {
     validateOnChange: false,
 
     onSubmit: async (values, helpers) => {
-// const formData:FormData = new FormData()
-
-// formData.append("userId", `${userId}`)
-// formData.append("subject", values.subject)
-// formData.append("description", values.description)
-// formData.append("image", file)
-
-
       try {
         const response = await axios.post(
           "/api/posts",
@@ -100,7 +92,7 @@ function CreatePostForm() {
     },
   });
 
-  const handleFileChange = async (
+  const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (event.target.files) {
@@ -119,7 +111,7 @@ function CreatePostForm() {
     <>
       <StyledPostForm onSubmit={formik.handleSubmit}>
         <StyledLable>Create Post</StyledLable>
-        <RadioGroupComp row={true} name="subject" onCange={formik.handleChange}>
+        <RadioGroupComp row={true} name="subject" onChange={formik.handleChange}>
           <RadioButton value="NEED HELP" lable="Need Help" />
           <RadioButton value="OFFER HELP" lable="Offer Help" />
         </RadioGroupComp>
