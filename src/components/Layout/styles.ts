@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
-import { NavLink, Link as SimpleLink } from "react-router-dom"
-import { Alert, ButtonGroup, Modal } from "@mui/material"
+import { NavLink } from "react-router-dom"
+import { Alert, Modal } from "@mui/material"
 
 import { colors } from "../../styles/colors"
 

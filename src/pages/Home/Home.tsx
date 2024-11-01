@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -10,7 +9,6 @@ import {
   ButtonContainer,
   PictureControl,
 } from "./styles"
-import { PagesPaths } from "../../components/Layout/types";
 
 import Button from "../../components/Button/Button"
 import picture from "../../assets/aboutusimage.jpg"

@@ -13,8 +13,8 @@ import {
 } from "./styles";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { signInSelectors } from "../../store/redux/SignInFormSlice/SignInFormSlice";
-import { alertActions } from "../../store/redux/alertSlice/AlertSlice";
-import { alertSliceState } from "../../store/redux/alertSlice/types";
+import { alertActions } from "../../store/redux/AlertSlice/AlertSlice";
+import { alertSliceState } from "../../store/redux/AlertSlice/types";
 import axios from "axios";
 import { useState } from "react";
 import { InputTypes } from "../../components/Input/types";
@@ -52,7 +52,7 @@ function Account() {
     validationSchema: validationSchema,
     validateOnChange: false,
 
-    onSubmit: async (values, helpers) => {
+    onSubmit: async (values ) => {
       try {
         const response = await axios.put(
           "/api/users/update",

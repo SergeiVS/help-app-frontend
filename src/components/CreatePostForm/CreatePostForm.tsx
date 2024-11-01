@@ -1,29 +1,29 @@
-import { useFormik } from "formik"
-import * as Yup from "yup"
-import { MouseEventHandler, useState } from "react"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-import Input from "../../components/Input/input"
-import Button from "../../components/Button/Button"
-import RadioButton from "../../components/radioButton/RadioButton"
-import RadioGroupComp from "../../components/Radiogroup/RadioGroupComp"
-import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { signInSelectors } from "../../store/redux/signInFormSlice/SignInFormSlice"
-import { alertActions } from "../../store/redux/alertSlice/AlertSlice"
+import Input from "../../components/Input/input";
+import Button from "../../components/Button/Button";
+import RadioButton from "../../components/RadioButton/RadioButton";
+import RadioGroupComp from "../../components/radiogroup/RadioGroupComp";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { signInSelectors } from "../../store/redux/SignInFormSlice/SignInFormSlice";
+import { alertActions } from "../../store/redux/AlertSlice/AlertSlice";
 
 import {
   StyledLable,
   StyledPostCard,
   ButtonWraper,
-} from "../../components/CreatePostForm/styles"
-import { PagesPaths } from "../../components/Layout/types"
+} from "../../components/CreatePostForm/styles";
+import { PagesPaths } from "../../components/Layout/types";
 
 function CreatePostForm() {
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const [file, setFile] = useState<File>() //
-  const [fileName, setFileName] = useState<string>()
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [file, setFile] = useState<File>(); //
+  const [fileName, setFileName] = useState<string>();
 
   const validationSchema = Yup.object().shape({
     header: Yup.string()
@@ -33,9 +33,9 @@ function CreatePostForm() {
       .required("Description is required field")
       .min(5, "Description should be longer as 5 symbols")
       .max(200, "Description should not be longer as 200 symbols"),
-  })
+  });
 
-  const userId: number = useAppSelector(signInSelectors.user).id
+  const userId: number = useAppSelector(signInSelectors.user).id;
 
   const formik = useFormik({
     initialValues: {
@@ -65,68 +65,66 @@ function CreatePostForm() {
               "Content-Type": "application/JSON",
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
-          },
-        )
+          }
+        );
 
         dispatch(
           alertActions.setAlertStateOpen({
             isOpen: true,
             severity: "success",
             children: response.data.message,
-          }),
-        )
+          })
+        );
 
-        helpers.resetForm()
-        navigate(PagesPaths.MYPOSTS)
+        helpers.resetForm();
+        navigate(PagesPaths.MYPOSTS);
       } catch (e: any) {
-        const error = e.response.data
+        const error = e.response.data;
 
         dispatch(
           alertActions.setAlertStateOpen({
             isOpen: true,
             severity: "error",
             children: error.errorMessage,
-          }),
-        )
+          })
+        );
       }
     },
-  })
+  });
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     if (event.target.files) {
-      const selectedPhoto = Array.from(event.target.files)
-      setFile(selectedPhoto[0])
-      const names = selectedPhoto[0].name
-      setFileName(names)
-      try{
-        const response = await axios.post("/api/files", file,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+      const selectedPhoto = Array.from(event.target.files);
+      setFile(selectedPhoto[0]);
+      const names = selectedPhoto[0].name;
+      setFileName(names);
+      try {
+        const response = await axios.post("/api/files", file, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        )
-        formik.setFieldValue("photoLink", response.data.message)
-        console.log(formik.values.photoLink)
-      }catch(e:any){
-        const error = e.response.data
-    
+        });
+        formik.setFieldValue("photoLink", response.data.message);
+        console.log(formik.values.photoLink);
+      } catch (e: any) {
+        const error = e.response.data;
+
         dispatch(
           alertActions.setAlertStateOpen({
             isOpen: true,
             severity: "error",
             children: error.errorMessage,
-          }),
-        )
+          })
+        );
       }
-
     }
-  }
-  const handleUploadClick =  () => {
-    document.getElementById("photo-upload")?.click()
-    
-  }
+  };
+  const handleUploadClick = () => {
+    document.getElementById("photo-upload")?.click();
+  };
 
   return (
     <>
@@ -193,6 +191,6 @@ function CreatePostForm() {
         </ButtonWraper>
       </StyledPostCard>
     </>
-  )
+  );
 }
-export default CreatePostForm
+export default CreatePostForm;

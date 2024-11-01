@@ -9,9 +9,9 @@ import { StyledLable, ButtonContainer, StyledForm } from "./styles"
 import { LogIn } from "./types"
 import { PagesPaths } from "../../components/Layout/types"
 import { InputTypes } from "../../components/Input/types"
-import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { signInActions } from "../../store/redux/signInFormSlice/SignInFormSlice"
-import { alertActions } from "../../store/redux/alertSlice/AlertSlice"
+import { useAppDispatch } from "../../store/hooks"
+import { signInActions } from "../../store/redux/SignInFormSlice/SignInFormSlice"
+import { alertActions } from "../../store/redux/AlertSlice/AlertSlice"
 
 function SignInForm() {
   const dispatch = useAppDispatch()

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import Input from "../../components/Input/input"
 import Button from "../../components/Button/Button"
 
-import { alertActions } from "../../store/redux/alertSlice/AlertSlice"
+import { alertActions } from "../../store/redux/AlertSlice/AlertSlice"
 import { PagesPaths } from "../../components/Layout/types"
 import { StyledSignUpForm, StyledLable, ButtonContainer } from "./styles"
 import axios from "axios"

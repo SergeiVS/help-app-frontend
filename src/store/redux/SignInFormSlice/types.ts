@@ -1,4 +1,3 @@
-import axios from "axios"
 
 export interface SignInState {
   user: User 

@@ -1,9 +1,8 @@
-import { isPending, PayloadAction } from "@reduxjs/toolkit"
 import axios from "axios"
 import { createAppSlice } from "../../createAppSlice"
 
 import { SignInState } from "./types"
-import { LogIn } from "../../components/SignInForm/types"
+import type { LogIn } from "../../../components/SignInForm/types"
 
 const signInInitialState: SignInState = {
   user: {
