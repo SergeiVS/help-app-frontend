@@ -1,9 +1,9 @@
 import { createAppSlice } from "../../createAppSlice"
 
-import { alertSliceState } from "./types"
+import { AlertSliceState } from "./types"
 import { PayloadAction } from "@reduxjs/toolkit"
 
-const alertInitialState: alertSliceState = {
+const alertInitialState: AlertSliceState = {
   isOpen: false,
   children: undefined,
   severity: undefined,
@@ -14,14 +14,14 @@ export const alertSlice = createAppSlice({
   initialState: alertInitialState,
   reducers: create => ({
     setAlertStateOpen: create.reducer(
-      (state: alertSliceState, action: PayloadAction<alertSliceState>) => {
+      (state: AlertSliceState, action: PayloadAction<AlertSliceState>) => {
         state.isOpen = action.payload.isOpen
         state.children = action.payload.children
         state.severity = action.payload.severity
       },
     ),
 
-    closeAlert: create.reducer((state: alertSliceState) => {
+    closeAlert: create.reducer((state: AlertSliceState) => {
       state.isOpen = alertInitialState.isOpen
       state.children = alertInitialState.children
       state.severity = alertInitialState.severity
@@ -29,15 +29,15 @@ export const alertSlice = createAppSlice({
   }),
 
   selectors: {
-    isOpen: (state: alertSliceState) => {
+    isOpen: (state: AlertSliceState) => {
       return state.isOpen
     },
 
-    severity: (state: alertSliceState) => {
+    severity: (state: AlertSliceState) => {
       return state.severity
     },
 
-    cildren: (state: alertSliceState) => {
+    cildren: (state: AlertSliceState) => {
       return state.children
     },
   },
