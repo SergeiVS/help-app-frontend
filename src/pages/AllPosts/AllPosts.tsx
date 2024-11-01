@@ -1,31 +1,68 @@
+import { useFormik } from "formik"
+import { useEffect, useState } from 'react';
+import axios from "axios"
 import PostCard from "../../components/PostCard/PostCard";
 
+import RadioButton from "../../components/RadioButton/RadioButton";
+import RadioGroupComp from "../../components/radiogroup/RadioGroupComp";
 
 import { PostsWrapper, PageWrapper } from "./styles";
 
-const testCard = {
-    
-        "postId": 1,
-        "subject": "Нужна помощь",
-        "header": "Требуется помощь с покупкой продуктов",
-        "user": {"name": "Иван Иванов", "email": "ivanov@example.com"},
-        "description": "Помогите купить продукты для пожилого человека",
-        "photoLink": "link_to_photo"
-    
-}
 
-function AllPosts () {
-    
-
-    return(
-        <>
-        <PageWrapper>
+function AllPosts() {
+    const [posts, setPosts] = useState([]);
+  
+    const formik = useFormik({
+      initialValues: {
+        subject: "",
+      },
+      onSubmit: async (values) => {
+        await fetchPosts(values.subject);
+      },
+    });
+  
+    const fetchPosts = async (subject : string) => {
+      try {
+        const response = await axios.get('/api/posts', {
+          params: { subject: subject || undefined },
+        });
+        setPosts(response.data); 
+      } catch (error) {
+        console.error('Ошибка загрузки карточек:', error);
+      }
+    };
+  
+    useEffect(() => {
+      fetchPosts(""); 
+    }, []);
+  
+    const handleRadioChange = (event : any) => {
+      const { value } = event.target;
+      formik.setFieldValue("subject", value);
+      fetchPosts(value); // Загружаем карточки по выбранному subject
+    };
+  
+    return (
+      <PageWrapper>
         <PostsWrapper>
-            <PostCard headline={testCard.header} description={testCard.description} contactInfo={testCard.user.name} image={testCard.photoLink} />
+          <RadioGroupComp row={true} name="subject" onChange={handleRadioChange} defaultValue="">
+            <RadioButton value="" lable="All Posts" />
+            <RadioButton value="NEED HELP" lable="Need Help" />
+            <RadioButton value="OFFER HELP" lable="Offer Help" />
+          </RadioGroupComp>
+          {/*{posts.map((post) => (
+            <PostCard
+              key={post.id}
+              subject={post.subject}
+              header={post.header}
+              description={post.description}
+              contactInfo={`${post.contact.name}, ${post.contact.email}`}
+              image={post.image}
+            />
+          ))}*/}
         </PostsWrapper>
-        </PageWrapper>
-        </>
-    )
-}
-
-export default AllPosts
+      </PageWrapper>
+    );
+  }
+  
+  export default AllPosts;
