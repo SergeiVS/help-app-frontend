@@ -1,9 +1,11 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import { useState } from "react";
+import EditIcon from "@mui/icons-material/Edit";
 
 import Input from "../../components/Input/input";
 import Button from "../../components/Button/Button";
-import EditIcon from "@mui/icons-material/Edit";
 
 import {
   StyledAccount,
@@ -14,10 +16,8 @@ import {
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { signInSelectors } from "../../store/redux/SignInFormSlice/SignInFormSlice";
 import { alertActions } from "../../store/redux/AlertSlice/AlertSlice";
-import { alertSliceState } from "../../store/redux/AlertSlice/types";
-import axios from "axios";
-import { useState } from "react";
 import { InputTypes } from "../../components/Input/types";
+import { User } from "../../store/redux/SignInFormSlice/types";
 
 function Account() {
   const dispatch = useAppDispatch();
@@ -40,19 +40,21 @@ function Account() {
       .required("Firstname could not be empty"),
   });
 
+  const user: User = useAppSelector(signInSelectors.user);
+
   const formik = useFormik({
     initialValues: {
-      userId: useAppSelector(signInSelectors.user).id,
-      firstName: useAppSelector(signInSelectors.user).firstName,
-      lastName: useAppSelector(signInSelectors.user).lastName,
-      email: useAppSelector(signInSelectors.user).email,
-      phoneNumber: useAppSelector(signInSelectors.user).phoneNumber,
+      userId: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
     },
 
     validationSchema: validationSchema,
     validateOnChange: false,
 
-    onSubmit: async (values ) => {
+    onSubmit: async (values) => {
       try {
         const response = await axios.put(
           "/api/users/update",
@@ -70,12 +72,14 @@ function Account() {
             },
           }
         );
-        let alertSate: alertSliceState = {
-          isOpen: true,
-          severity: "info",
-          children: response.data.message,
-        };
-        dispatch(alertActions.setAlertStateOpen(alertSate));
+
+        dispatch(
+          alertActions.setAlertStateOpen({
+            isOpen: true,
+            severity: "info",
+            children: response.data.message,
+          })
+        );
 
         setInputDisabled(true);
         setSendButtonDisabled(true);
@@ -83,23 +87,22 @@ function Account() {
         getNewValues();
       } catch (e: any) {
         const error = e.response.data;
-        let alertSate: alertSliceState = {
-          isOpen: true,
-          severity: "error",
-          children: error.errorMessage,
-        };
-        dispatch(alertActions.setAlertStateOpen(alertSate));
+        dispatch(
+          alertActions.setAlertStateOpen({
+            isOpen: true,
+            severity: "error",
+            children: error.errorMessage,
+          })
+        );
       }
     },
   });
 
   const getNewValues = () => {
-    formik.values.userId = useAppSelector(signInSelectors.user).id;
-    formik.values.firstName = useAppSelector(signInSelectors.user).firstName;
-    formik.values.lastName = useAppSelector(signInSelectors.user).lastName;
-    formik.values.phoneNumber = useAppSelector(
-      signInSelectors.user
-    ).phoneNumber;
+    formik.values.userId = user.id;
+    formik.values.firstName = user.firstName;
+    formik.values.lastName = user.lastName;
+    formik.values.phoneNumber = user.phoneNumber;
     formik.values.email = useAppSelector(signInSelectors.user).email;
   };
 
