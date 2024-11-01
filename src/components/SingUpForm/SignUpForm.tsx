@@ -71,7 +71,7 @@ function SignUpForm() {
   return (
     <>
       <StyledSignUpForm onSubmit={formik.handleSubmit}>
-        <StyledLable>Sign in</StyledLable>
+        <StyledLable>Sign up</StyledLable>
         <Input
           name="firstName"
           label="Firstname"
