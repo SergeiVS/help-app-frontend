@@ -130,7 +130,7 @@ function CreatePostForm() {
     <>
       <StyledPostCard onSubmit={formik.handleSubmit}>
         <StyledLable>Create Post</StyledLable>
-        <RadioGroupComp row={true} name="subject" onCange={formik.handleChange}>
+        <RadioGroupComp row={true} name="subject" onChange={formik.handleChange}>
           <RadioButton value="NEED HELP" lable="Need Help" />
           <RadioButton value="OFFER HELP" lable="Offer Help" />
         </RadioGroupComp>
