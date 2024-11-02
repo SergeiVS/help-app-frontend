@@ -1,68 +1,69 @@
-import { useFormik } from "formik"
-import { useEffect, useState } from 'react';
-import axios from "axios"
-import PostCard from "../../components/PostCard/PostCard";
+import { useState, useEffect } from "react";
+import { useFormik } from "formik";
+import axios from "axios";
 
+import PostCard from "../../components/PostCard/PostCard";
 import RadioButton from "../../components/RadioButton/RadioButton";
 import RadioGroupComp from "../../components/radiogroup/RadioGroupComp";
 
 import { PostsWrapper, PageWrapper } from "./styles";
 
-
 function AllPosts() {
-    const [posts, setPosts] = useState([]);
+  // Состояние для хранения постов, полученных с сервера
+  const [posts, setPosts] = useState([]);
   
-    const formik = useFormik({
-      initialValues: {
-        subject: "",
-      },
-      onSubmit: async (values) => {
-        await fetchPosts(values.subject);
-      },
-    });
+  // Используем Formik для обработки значения RadioButtonGroup
+  const formik = useFormik({
+    initialValues: { subject: "" },
+    onSubmit: async (values) => {
+      fetchPosts(values.subject);  // Загружаем посты при изменении значения
+    },
+  });
   
-    const fetchPosts = async (subject : string) => {
-      try {
-        const response = await axios.get('/api/posts', {
-          params: { subject: subject || undefined },
-        });
-        setPosts(response.data); 
-      } catch (error) {
-        console.error('Ошибка загрузки карточек:', error);
-      }
-    };
-  
-    useEffect(() => {
-      fetchPosts(""); 
-    }, []);
-  
-    const handleRadioChange = (event : any) => {
-      const { value } = event.target;
-      formik.setFieldValue("subject", value);
-      fetchPosts(value); // Загружаем карточки по выбранному subject
-    };
-  
-    return (
-      <PageWrapper>
-        <PostsWrapper>
-          <RadioGroupComp row={true} name="subject" onChange={handleRadioChange} defaultValue="">
-            <RadioButton value="" lable="All Posts" />
-            <RadioButton value="NEED HELP" lable="Need Help" />
-            <RadioButton value="OFFER HELP" lable="Offer Help" />
-          </RadioGroupComp>
-          {/*{posts.map((post) => (
-            <PostCard
-              key={post.id}
-              subject={post.subject}
-              header={post.header}
-              description={post.description}
-              contactInfo={`${post.contact.name}, ${post.contact.email}`}
-              image={post.image}
-            />
-          ))}*/}
-        </PostsWrapper>
-      </PageWrapper>
-    );
-  }
-  
-  export default AllPosts;
+  // Функция для отправки GET-запроса на сервер
+  const fetchPosts = async (subject : string) => {
+    try {
+      const response = await axios.get(`https://stingray-app-azeoe.ondigitalocean.app/api/posts?subject=${subject}`);
+      setPosts(response.data);  // Сохраняем данные с сервера в состоянии posts
+    } catch (error) {
+      console.error("Ошибка при получении данных:", error);
+    }
+  };
+
+  // Отправляем запрос при первом рендере и каждый раз при изменении subject
+  useEffect(() => {
+    fetchPosts(formik.values.subject);
+  }, [formik.values.subject]);
+
+  return (
+    <PageWrapper>
+      <PostsWrapper>
+        {/* Компонент для выбора subject с использованием RadioButtonGroup */}
+        <RadioGroupComp
+          row={true}
+          name="subject"
+          onChange={(e) => formik.setFieldValue("subject", e.target.value)}
+          defaultValue=""
+        >
+          <RadioButton value="" label="All Posts" />
+          <RadioButton value="NEED HELP" label="Need Help" />
+          <RadioButton value="OFFER HELP" label="Offer Help" />
+        </RadioGroupComp>
+
+        {/* Отображение PostCard для каждого поста из состояния posts */}
+        {/*{posts.map((post) => (
+          <PostCard
+            key={post.id}
+            subject={post.subject}
+            header={post.header}
+            description={post.description}
+            contactInfo={`${post.contact.name}, ${post.contact.email}`}
+            image={post.image}
+          />
+        ))}*/}
+      </PostsWrapper>
+    </PageWrapper>
+  );
+}
+
+export default AllPosts;
