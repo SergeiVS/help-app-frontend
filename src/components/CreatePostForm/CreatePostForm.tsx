@@ -22,7 +22,7 @@ import { PagesPaths } from "../../components/Layout/types";
 function CreatePostForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [file, setFile] = useState<File>(); //
+  const [file, setFile] = useState<File>(); 
   const [fileName, setFileName] = useState<string>();
 
   const validationSchema = Yup.object().shape({
@@ -130,9 +130,9 @@ function CreatePostForm() {
     <>
       <StyledPostCard onSubmit={formik.handleSubmit}>
         <StyledLable>Create Post</StyledLable>
-        <RadioGroupComp row={true} name="subject" onCange={formik.handleChange}>
-          <RadioButton value="NEED HELP" lable="Need Help" />
-          <RadioButton value="OFFER HELP" lable="Offer Help" />
+        <RadioGroupComp row={true} name="subject" onChange={formik.handleChange}>
+          <RadioButton value="NEED HELP" label="Need Help" />
+          <RadioButton value="OFFER HELP" label="Offer Help" />
         </RadioGroupComp>
 
         <Input
