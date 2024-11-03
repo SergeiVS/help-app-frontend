@@ -1,68 +1,64 @@
-import { useFormik } from "formik"
-import { useEffect, useState } from 'react';
-import axios from "axios"
-import PostCard from "../../components/PostCard/PostCard";
+import { useState, useEffect } from "react";
+import { useFormik } from "formik";
+import axios from "axios";
 
+import PostCard from "../../components/PostCard/PostCard";
 import RadioButton from "../../components/RadioButton/RadioButton";
 import RadioGroupComp from "../../components/radiogroup/RadioGroupComp";
 
 import { PostsWrapper, PageWrapper } from "./styles";
 
-
 function AllPosts() {
-    const [posts, setPosts] = useState([]);
   
-    const formik = useFormik({
-      initialValues: {
-        subject: "",
-      },
-      onSubmit: async (values) => {
-        await fetchPosts(values.subject);
-      },
-    });
+  const [posts, setPosts] = useState([]);
   
-    const fetchPosts = async (subject : string) => {
-      try {
-        const response = await axios.get('/api/posts', {
-          params: { subject: subject || undefined },
-        });
-        setPosts(response.data); 
-      } catch (error) {
-        console.error('Ошибка загрузки карточек:', error);
-      }
-    };
+  const formik = useFormik({
+    initialValues: { subject: "" },
+    onSubmit: async (values) => {
+      fetchPosts(values.subject);  
+    },
+  });
   
-    useEffect(() => {
-      fetchPosts(""); 
-    }, []);
-  
-    const handleRadioChange = (event : any) => {
-      const { value } = event.target;
-      formik.setFieldValue("subject", value);
-      fetchPosts(value); // Загружаем карточки по выбранному subject
-    };
-  
-    return (
-      <PageWrapper>
-        <PostsWrapper>
-          <RadioGroupComp row={true} name="subject" onChange={handleRadioChange} defaultValue="">
-            <RadioButton value="" lable="All Posts" />
-            <RadioButton value="NEED HELP" lable="Need Help" />
-            <RadioButton value="OFFER HELP" lable="Offer Help" />
-          </RadioGroupComp>
-          {/*{posts.map((post) => (
-            <PostCard
-              key={post.id}
-              subject={post.subject}
-              header={post.header}
-              description={post.description}
-              contactInfo={`${post.contact.name}, ${post.contact.email}`}
-              image={post.image}
-            />
-          ))}*/}
-        </PostsWrapper>
-      </PageWrapper>
-    );
-  }
-  
-  export default AllPosts;
+  const fetchPosts = async (subject : string) => {
+    try {
+      const url = subject ? `/api/posts?subject=${subject}` : `/api/posts`;
+      const response = await axios.get(url);
+      setPosts(response.data); 
+    } catch (error) {
+      console.error("Ошибка при получении данных:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts(formik.values.subject);
+  }, [formik.values.subject]);
+
+  return (
+    <PageWrapper>
+      <PostsWrapper>
+        <RadioGroupComp
+          row={true}
+          name="subject"
+          onChange={(e) => formik.setFieldValue("subject", e.target.value)}
+          defaultValue=""
+        >
+          <RadioButton value="" label="All Posts" />
+          <RadioButton value="NEED HELP" label="Need Help" />
+          <RadioButton value="OFFER HELP" label="Offer Help" />
+        </RadioGroupComp>
+        {/*{posts.map((post) => (
+          <PostCard
+            key={post.id}
+            subject={post.subject}
+            header={post.header}
+            description={post.description}
+            contactInfo={`${post.contact.name}, ${post.contact.email}`}
+            image={post.image}
+          />
+        ))}*/}
+      </PostsWrapper>
+    </PageWrapper>
+  );
+}
+
+export default AllPosts;

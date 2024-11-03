@@ -2,7 +2,7 @@ import * as Yup from "yup"
 import { useFormik } from "formik"
 import { useNavigate } from "react-router-dom"
 
-import Input from "../../components/Input/input"
+import Input from "../Input/Input"
 import Button from "../../components/Button/Button"
 
 import { StyledLable, ButtonContainer, StyledForm } from "./styles"

@@ -4,7 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 
-import Input from "../../components/Input/input";
+import Input from "../Input/Input";
 import Button from "../../components/Button/Button";
 
 import {
