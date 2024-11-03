@@ -5,3 +5,8 @@ export interface NewPostSendRequest {
   description: string;
   image: File | undefined;
 }
+
+export enum UploadButtonMessage {
+  UPLOAD = "Upload Photo",
+  REMOVE = "Remove Photo",
+}

@@ -9,6 +9,7 @@ export interface ButtonProps {
   onClick?: MouseEventHandler<HTMLButtonElement>
   type?: "button"|"submit"
   children?: ReactNode
+  icon?: ReactNode
 }
 
 export enum variants {

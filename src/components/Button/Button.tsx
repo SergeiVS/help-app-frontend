@@ -9,6 +9,7 @@ function Button({
   isDeleteButton= false,
   isRegularButton,
   type = "submit",
+  icon
 }: ButtonProps) {
   const variant =
     isDeleteButton || !isRegularButton ? variants.OUTLINED : variants.CONTAINED
@@ -24,6 +25,7 @@ function Button({
         $isRegularButton={isRegularButton}
         //if true: Button variant= outlined, border DELETE_BUTTON
         $isDeleteButton={isDeleteButton}
+        endIcon={icon}
       >
         {children}
       </StyledButton>
