@@ -1,8 +1,11 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import SendIcon from "@mui/icons-material/Send";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import ClearIcon from "@mui/icons-material/Clear";
 
 import Input from "../../components/Input/input";
 import Button from "../../components/Button/Button";
@@ -16,16 +19,26 @@ import {
   StyledLable,
   StyledPostForm,
   ButtonWraper,
+  FileInputWrapper,
+  PhotoPreviewWrapper,
+  PhotoPreview,
+  UploadButtonWraper,
 } from "../../components/CreatePostForm/styles";
 import { PagesPaths } from "../../components/Layout/types";
+import { UploadButtonMessage } from "./types";
 
 function CreatePostForm() {
   const userId: number = useAppSelector(signInSelectors.user).id;
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [file, setFile] = useState<File>(); //
-  const [fileName, setFileName] = useState<string>();
+  const [file, setFile] = useState<File>();
+  const [uploadButtonText, setButtonText] = useState<string>(
+    UploadButtonMessage.UPLOAD
+  );
+  const [uploadButtonIcon, setIcon] = useState(<CloudUploadIcon />);
+  const [showPhoto, setShowPhoto] = useState<boolean>(false);
+  const[imagePath, setImagePath]= useState<string|undefined>(undefined)
 
   const validationSchema = Yup.object().shape({
     header: Yup.string()
@@ -92,26 +105,48 @@ function CreatePostForm() {
     },
   });
 
-  const handleFileChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
+      setFile(undefined)
       const selectedPhoto = Array.from(event.target.files);
       setFile(selectedPhoto[0]);
-      const names = selectedPhoto[0].name;
-      setFileName(names);
       formik.setFieldValue("image", file);
+      setShowPhoto(true);
+    } 
+  };
+
+  const handleUploadClick = () => {
+    if (!showPhoto) {
+      document.getElementById("photo-upload")?.click();
+    } else {
+      setFile(undefined);
     }
   };
-  const handleUploadClick = () => {
-    document.getElementById("photo-upload")?.click();
-  };
+
+  useEffect(() => {
+    if (file) {
+      setButtonText(UploadButtonMessage.REMOVE);
+      setIcon(<ClearIcon />);
+      setImagePath(URL.createObjectURL(file))
+      setShowPhoto(true)
+    } else {
+      setButtonText(UploadButtonMessage.UPLOAD);
+      setIcon(<CloudUploadIcon />);
+      setImagePath(undefined)
+      setShowPhoto(false)
+    }
+    console.log(showPhoto, file);
+  }, [file]);
 
   return (
     <>
       <StyledPostForm onSubmit={formik.handleSubmit}>
         <StyledLable>Create Post</StyledLable>
-        <RadioGroupComp row={true} name="subject" onChange={formik.handleChange}>
+        <RadioGroupComp
+          row={true}
+          name="subject"
+          onChange={formik.handleChange}
+        >
           <RadioButton value="NEED HELP" lable="Need Help" />
           <RadioButton value="OFFER HELP" lable="Offer Help" />
         </RadioGroupComp>
@@ -134,16 +169,18 @@ function CreatePostForm() {
           value={formik.values.description}
         />
 
-        {/* Кнопка загрузки файлов */}
-        <label htmlFor="photo-upload" style={{ display: "inline-block" }}>
-          <Button
-            isRegularButton
-            type="button"
-            onClick={handleUploadClick}
-            disabled={!formik.dirty || formik.isSubmitting}
-          >
-            Upload Photo
-          </Button>
+        <FileInputWrapper>
+          <UploadButtonWraper>
+            <Button
+              isRegularButton
+              type="button"
+              onClick={handleUploadClick}
+              disabled={!formik.dirty || formik.isSubmitting}
+              icon={uploadButtonIcon}
+            >
+              {uploadButtonText}
+            </Button>
+          </UploadButtonWraper>
           <input
             id="photo-upload"
             name="image"
@@ -153,21 +190,18 @@ function CreatePostForm() {
             accept="image/*"
             value={formik.values.image}
           />
-          {}
-        </label>
-
-        {/* Отображение имен загруженных файлов*/}
-        {fileName !== undefined && (
-          <div style={{ padding: "10px" }}>
-            <strong>Uploaded Photo:</strong>
-            <ul>{fileName}</ul>
-          </div>
-        )}
+          {showPhoto && (
+            <PhotoPreviewWrapper>
+              <PhotoPreview src={imagePath} />
+            </PhotoPreviewWrapper>
+          )}
+        </FileInputWrapper>
 
         <ButtonWraper>
           <Button
             isRegularButton
             disabled={!formik.dirty || formik.isSubmitting}
+            icon={<SendIcon />}
           >
             Send
           </Button>
