@@ -2,14 +2,14 @@ import { FormControl } from "@mui/material"
 import type { RadioGroupProps } from "../../components/radiogroup/types" 
 import { StyledRadioGroup } from "../../components/radiogroup/Styles" 
 
-function RadioGroupComp({ row, name, defaultValue, children, onCange}: RadioGroupProps) {
+function RadioGroupComp({ row, name, defaultValue, children, onChange}: RadioGroupProps) {
   return (
     <>
       <FormControl>
         <StyledRadioGroup
           row={row}
           name={name}
-          onChange={onCange}
+          onChange={onChange}
           defaultValue={defaultValue}
         >{children}
             {/* //Here will be placed <FormControlLabel/> with all needed props
