@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import Input from "../../components/Input/input";
+import Input from "../Input/Input";
 import Button from "../../components/Button/Button";
 import RadioButton from "../../components/RadioButton/RadioButton";
 import RadioGroupComp from "../../components/radiogroup/RadioGroupComp";
