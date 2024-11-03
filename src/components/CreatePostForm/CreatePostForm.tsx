@@ -32,7 +32,6 @@ function CreatePostForm() {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-<<<<<<< HEAD
   const [file, setFile] = useState<File>();
   const [uploadButtonText, setButtonText] = useState<string>(
     UploadButtonMessage.UPLOAD
@@ -40,10 +39,6 @@ function CreatePostForm() {
   const [uploadButtonIcon, setIcon] = useState(<CloudUploadIcon />);
   const [showPhoto, setShowPhoto] = useState<boolean>(false);
   const[imagePath, setImagePath]= useState<string|undefined>(undefined)
-=======
-  const [file, setFile] = useState<File>(); 
-  const [fileName, setFileName] = useState<string>();
->>>>>>> f9c6ce7f1125aa644bca99693e8d918a292fb632
 
   const validationSchema = Yup.object().shape({
     header: Yup.string()
@@ -147,21 +142,11 @@ function CreatePostForm() {
     <>
       <StyledPostForm onSubmit={formik.handleSubmit}>
         <StyledLable>Create Post</StyledLable>
-<<<<<<< HEAD
-        <RadioGroupComp
-          row={true}
-          name="subject"
-          onChange={formik.handleChange}
-        >
-          <RadioButton value="NEED HELP" lable="Need Help" />
-          <RadioButton value="OFFER HELP" lable="Offer Help" />
-=======
         <RadioGroupComp row={true} name="subject" onChange={formik.handleChange}>
 
           <RadioButton value="NEED HELP" label="Need Help" />
           <RadioButton value="OFFER HELP" label="Offer Help" />
 
->>>>>>> f9c6ce7f1125aa644bca99693e8d918a292fb632
         </RadioGroupComp>
 
         <Input
