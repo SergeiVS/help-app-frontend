@@ -2,15 +2,16 @@ import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 
-import PostCard from "../../components/PostCard/PostCard";
+//import PostCard from "../../components/PostCard/PostCard";
 import RadioButton from "../../components/RadioButton/RadioButton";
 import RadioGroupComp from "../../components/radiogroup/RadioGroupComp";
 
 import { PostsWrapper, PageWrapper } from "./styles";
+import { Post, Posts } from "./types";
 
 function AllPosts() {
-  
-  const [posts, setPosts] = useState([]);
+  const [subject, setSubject] = useState<string | undefined>("")
+  const [response, setResponse] = useState<Posts>([]);
   
   const formik = useFormik({
     initialValues: { subject: "" },
@@ -21,9 +22,9 @@ function AllPosts() {
   
   const fetchPosts = async (subject : string) => {
     try {
-      const url = subject ? `/api/posts?subject=${subject}` : `/api/posts`;
+      const url = subject ? `/api/posts?subject=${subject}` : `https://stingray-app-azeoe.ondigitalocean.app/api/posts`;
       const response = await axios.get(url);
-      setPosts(response.data); 
+      setResponse(response.data); 
     } catch (error) {
       console.error("Ошибка при получении данных:", error);
     }
