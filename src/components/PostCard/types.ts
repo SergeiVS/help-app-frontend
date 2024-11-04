@@ -1,8 +1,9 @@
 export interface PostCardProps {
+  subject: string;
   image: string;
-  headline: string;
-  contactInfo: string;
   description: string;
- 
+  email?: string;
+  isTop?: boolean;
+  header:string;
+  contactInfo:string;
 }
-  

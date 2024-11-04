@@ -1,32 +1,28 @@
-import { PostCardProps } from "./types"
+import { PostCardProps } from "./types";
 import {
-  StyledPostCard,
-  StyledHeader,
-  StyledDescription,
-  StyledContactInfo,
-  StyledPostContainer,
-} from "./styles"
-
-const PostCard = (props: PostCardProps) => {
-  const { headline, description, contactInfo, image } = props
-
+  StyledPostCardWrapper,
+  ImageWrapper,
+  Image,
+  InfoWrapper,
+  Title,
+  Description,
+  Contact,
+  SubjectLabel
+} from "./styles";
+export function PostCard({ subject, image, header, description, contactInfo }: PostCardProps) {
   return (
-    <StyledPostContainer>
-      <StyledContactInfo>
-        <p>{contactInfo}</p>
-      </StyledContactInfo>
-
-      <StyledPostCard>
-        <StyledHeader>{headline}</StyledHeader>
-        <img
-          src={image}
-          alt="Photo"
-          style={{ width: "100px", height: "auto" }}
-        />
-        <StyledDescription>{description}</StyledDescription>
-      </StyledPostCard>
-    </StyledPostContainer>
-  )
+    <StyledPostCardWrapper>
+      <ImageWrapper>
+        <Image src={image} alt={header} />
+      </ImageWrapper>
+      <InfoWrapper>
+        <Title>{header}</Title>
+        <Contact>{contactInfo}</Contact>
+        <Description>{description}</Description>
+      </InfoWrapper>
+      <SubjectLabel>{subject}</SubjectLabel>
+    </StyledPostCardWrapper>
+  );
 }
 
-export default PostCard
+export default PostCard;
