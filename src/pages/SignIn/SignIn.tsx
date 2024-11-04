@@ -1,6 +1,6 @@
 import SignInForm from "../../components/SignInForm/SignInForm"
 
-import { PageWrapper } from "./styles"
+import {PageWrapper}from "../../styles/CommonCss"
 
 function SignIn() {
   return (

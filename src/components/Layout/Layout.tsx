@@ -27,7 +27,6 @@ import newpost from "../../assets/createpost.png";
 import { LayoutProps, PagesPaths } from "./types";
 import logo from "../../assets/logo.png";
 
-import CloseIcon from "@mui/icons-material/Close";
 import {
   alertSelectors,
   alertActions,
@@ -37,7 +36,6 @@ import {
   signInSelectors,
 } from "../../store/redux/SignInFormSlice/SignInFormSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { IconButton } from "@mui/material";
 
 function Layout({ children }: LayoutProps) {
   const navigate = useNavigate();
@@ -79,7 +77,7 @@ function Layout({ children }: LayoutProps) {
   return (
     <LayoutWrapper>
       <AlertComp
-        isOpen={isModalOpen}
+        isOpen={modalOpen}
         severity={severity}
         children={message}
         onClose={closeModal}

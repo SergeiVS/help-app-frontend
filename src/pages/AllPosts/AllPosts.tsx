@@ -6,7 +6,8 @@ import axios from "axios";
 import RadioButton from "../../components/RadioButton/RadioButton";
 import RadioGroupComp from "../../components/radiogroup/RadioGroupComp";
 
-import { PostsWrapper, PageWrapper } from "./styles";
+import {PageWrapper}from "../../styles/CommonCss"
+import { PostsWrapper} from "./styles";
 import { Post, Posts } from "./types";
 
 function AllPosts() {
