@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import SendIcon from "@mui/icons-material/Send";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ClearIcon from "@mui/icons-material/Clear";
-import ImageResizer from "react-image-file-resizer";
 
 import Input from "../Input/Input";
 import Button from "../../components/Button/Button";
