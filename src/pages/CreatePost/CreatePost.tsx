@@ -1,4 +1,4 @@
-import { PageWrapper } from "./styles"
+import {PageWrapper}from "../../styles/CommonCss"
 
 import CreatePostForm from "../../components/CreatePostForm/CreatePostForm"
 

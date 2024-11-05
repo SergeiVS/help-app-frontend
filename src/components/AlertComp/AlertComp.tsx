@@ -1,17 +1,19 @@
-import CloseIcon from "@mui/icons-material/Close";
-
+import LinearProgress from "@mui/material/LinearProgress";
 import { StyledModal, StyledAlert } from "./styles";
 import { AlertProps } from "./types";
-import IconButton from "@mui/material/IconButton";
 
-function AlertComp({ isOpen, severity, onClose, children }: AlertProps) {
+function AlertComp({
+  isOpen,
+  severity,
+  onClose,
+  progress,
+  children,
+}: AlertProps) {
   return (
     <StyledModal open={isOpen} onClose={onClose}>
-      <StyledAlert severity={severity}>
+      <StyledAlert severity={severity} onClose={onClose}>
         {children}
-        <IconButton onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
+        <LinearProgress variant="determinate" value={progress} />
       </StyledAlert>
     </StyledModal>
   );

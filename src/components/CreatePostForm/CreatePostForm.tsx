@@ -10,9 +10,12 @@ import ClearIcon from "@mui/icons-material/Clear";
 import Input from "../Input/Input";
 import Button from "../../components/Button/Button";
 import RadioButton from "../../components/RadioButton/RadioButton";
-import RadioGroupComp from "../../components/radiogroup/RadioGroupComp";
+import RadioGroupComp from "../RadioGroupComp/RadioGroupComp";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { signInSelectors } from "../../store/redux/SignInFormSlice/SignInFormSlice";
+import {
+  signInActions,
+  signInSelectors,
+} from "../../store/redux/SignInFormSlice/SignInFormSlice";
 import { alertActions } from "../../store/redux/AlertSlice/AlertSlice";
 
 import {
@@ -38,7 +41,7 @@ function CreatePostForm() {
   );
   const [uploadButtonIcon, setIcon] = useState(<CloudUploadIcon />);
   const [showPhoto, setShowPhoto] = useState<boolean>(false);
-  const[imagePath, setImagePath]= useState<string|undefined>(undefined)
+  const [imagePath, setImagePath] = useState<string | undefined>(undefined);
 
   const validationSchema = Yup.object().shape({
     header: Yup.string()
@@ -64,6 +67,7 @@ function CreatePostForm() {
 
     onSubmit: async (values, helpers) => {
       try {
+        dispatch(signInActions.setPending(true));
         const response = await axios.post(
           "/api/posts",
           {
@@ -80,7 +84,7 @@ function CreatePostForm() {
             },
           }
         );
-
+        dispatch(signInActions.setPending(false));
         dispatch(
           alertActions.setAlertStateOpen({
             isOpen: true,
@@ -92,13 +96,14 @@ function CreatePostForm() {
         helpers.resetForm();
         navigate(PagesPaths.MYPOSTS);
       } catch (e: any) {
+        dispatch(signInActions.setPending(false));
         const error = e.response.data;
 
         dispatch(
           alertActions.setAlertStateOpen({
             isOpen: true,
             severity: "error",
-            children: error.errorMessage,
+            children: error /* error.errorMessage*/,
           })
         );
       }
@@ -107,12 +112,12 @@ function CreatePostForm() {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      setFile(undefined)
+      setFile(undefined);
       const selectedPhoto = Array.from(event.target.files);
       setFile(selectedPhoto[0]);
       formik.setFieldValue("image", file);
       setShowPhoto(true);
-    } 
+    }
   };
 
   const handleUploadClick = () => {
@@ -127,13 +132,13 @@ function CreatePostForm() {
     if (file) {
       setButtonText(UploadButtonMessage.REMOVE);
       setIcon(<ClearIcon />);
-      setImagePath(URL.createObjectURL(file))
-      setShowPhoto(true)
+      setImagePath(URL.createObjectURL(file));
+      setShowPhoto(true);
     } else {
       setButtonText(UploadButtonMessage.UPLOAD);
       setIcon(<CloudUploadIcon />);
-      setImagePath(undefined)
-      setShowPhoto(false)
+      setImagePath(undefined);
+      setShowPhoto(false);
     }
     console.log(showPhoto, file);
   }, [file]);
@@ -142,11 +147,13 @@ function CreatePostForm() {
     <>
       <StyledPostForm onSubmit={formik.handleSubmit}>
         <StyledLable>Create Post</StyledLable>
-        <RadioGroupComp row={true} name="subject" onChange={formik.handleChange}>
-
+        <RadioGroupComp
+          row={true}
+          name="subject"
+          onChange={formik.handleChange}
+        >
           <RadioButton value="NEED HELP" label="Need Help" />
           <RadioButton value="OFFER HELP" label="Offer Help" />
-
         </RadioGroupComp>
 
         <Input

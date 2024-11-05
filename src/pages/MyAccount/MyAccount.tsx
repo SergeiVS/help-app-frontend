@@ -1,4 +1,4 @@
-import { PageWrapper } from "./styles"
+import {PageWrapper}from "../../styles/CommonCss"
 import Account from "../../components/Account/Account"
 
 function MyAccount() {
