@@ -8,14 +8,10 @@ import exampleImage from "../../assets/logo.png";
 
 import { CardWrapper, ButtonConraiver, ButtonsContainer } from "./styles";
 import { UserCardProps } from "./types";
-import { useState } from "react";
 
-function UserCardComp({ post, key, onDelete }: UserCardProps) {
-const [id, setId]= useState<number>(0)
-setId(post.postId)
-
+export default ({ post, onDelete }: UserCardProps) => {
   return (
-    <CardWrapper key={key}>
+    <CardWrapper>
       <PostCard
         subject={post.subject.name}
         header={post.header}
@@ -29,7 +25,7 @@ setId(post.postId)
             isDeleteButton
             children={<DeleteForeverIcon color="error" />}
             type="button"
-            onClick={onDelete}
+            onClick={() => onDelete(post.postId)}
           />
         </ButtonConraiver>
         <ButtonConraiver>
@@ -38,6 +34,4 @@ setId(post.postId)
       </ButtonsContainer>
     </CardWrapper>
   );
-}
-
-export default UserCardComp;
+};

@@ -7,7 +7,7 @@ export const StyledPostCardWrapper = styled.div`
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 16px;
-  width: 100%;
+  min-width: 100%;
   background-color: white;
   height: 200px;
   gap: 8px;
