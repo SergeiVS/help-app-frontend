@@ -21,8 +21,8 @@ export const Header = styled.div`
   background-color: ${colors.LIGHTBLUE};
   gap: 10px;
   box-shadow: 0px 25px 20px -20px rgba(0, 0, 0, 0.45);
-  padding-left: 120px;
-  padding-right: 120px;
+  padding-left: 250px;
+  padding-right: 250px;
   align-items: center;
   justify-content: space-between;
 `

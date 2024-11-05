@@ -5,6 +5,6 @@ export const PageWrapper = styled.div`
   flex-direction: column;
   flex: 1;
   align-items: center;
-  justify-content: center;
+  padding-top: 70px;
   gap: 120px;
 `

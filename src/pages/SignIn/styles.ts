@@ -6,6 +6,6 @@ export const PageWrapper = styled.div`
   width: 100%;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding-top: 70px;
   gap: 120px;
 `
