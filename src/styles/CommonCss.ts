@@ -21,6 +21,7 @@ export const PageWrapper = styled.div`
   flex-direction: column;
   flex: 1;
   align-items: center;
-  justify-content: center;
-  padding: 120px;
+  padding-left: 250px;
+  padding-right: 250px;
+  padding-top: 70px;
 `

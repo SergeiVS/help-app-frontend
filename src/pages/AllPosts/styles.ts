@@ -3,17 +3,6 @@ import styled from "@emotion/styled"
 import { colors } from "../../styles/colors"
 
 
-export const PageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  align-items: left;
-  padding-left: 250px;
-  padding-right: 250px;
-  padding-top: 70px;
-
-`
-
 export const PostsWrapper = styled.div`
   display: flex;
   flex-direction: column;

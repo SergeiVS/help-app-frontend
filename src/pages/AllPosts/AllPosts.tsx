@@ -26,7 +26,7 @@ function AllPosts() {
       const response = await axios.get<{ responses: Posts }>(url);
       setResult(response.data.responses);
     } catch (error) {
-      setError("Ошибка при загрузке данных");
+      setError("Error loading data");
     }
   };
 
@@ -47,7 +47,7 @@ function AllPosts() {
         />
       ))
     ) : (
-      <p>Нет доступных постов</p>
+      <p>No posts available</p>
     );
 
   return (
