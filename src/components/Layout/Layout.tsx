@@ -36,13 +36,17 @@ import {
   signInSelectors,
 } from "../../store/redux/SignInFormSlice/SignInFormSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import Spinner from "../Spinner/Spinner";
 
 function Layout({ children }: LayoutProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLoggedOn = useAppSelector(signInSelectors.isLoggedOn);
   const [modalOpen, setModalOpen] = useState(false);
+  const [progress, setProgress] = useState<number>(5);
+  const [isPending, setPending] = useState<boolean>(false);
 
+  const pending: boolean = useAppSelector(signInSelectors.isPending);
   const isModalOpen = useAppSelector(alertSelectors.isOpen);
   const severity = useAppSelector(alertSelectors.severity);
   const message = useAppSelector(alertSelectors.cildren);
@@ -55,6 +59,29 @@ function Layout({ children }: LayoutProps) {
       setModalOpen(false);
     }
   }, [isModalOpen]);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      setProgress(7);
+      const timer = setInterval(() => {
+        setProgress((prevProgress) =>
+          prevProgress >= 100 ? 0 : prevProgress + 5
+        );
+      }, 250);
+
+      return () => {
+        clearInterval(timer);
+      };
+    }
+  }, [isModalOpen]);
+
+  useEffect(() => {
+    if (pending) {
+      setPending(true);
+    } else {
+      setPending(false);
+    }
+  }, [pending]);
 
   const closeModal = () => {
     setModalOpen(false);
@@ -80,8 +107,10 @@ function Layout({ children }: LayoutProps) {
         isOpen={modalOpen}
         severity={severity}
         children={message}
+        progress={progress}
         onClose={closeModal}
       />
+      {isPending && <Spinner />}
       <Header>
         <LogoDiv onClick={goToHomePage}>
           <LogoImg src={logo}></LogoImg>

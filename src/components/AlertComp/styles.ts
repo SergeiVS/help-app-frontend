@@ -6,10 +6,15 @@ export const StyledModal = styled(Modal)`
   top: 50%;
   left: 20%;
   width: 450px;
-  height: fit-content;
+  min-height: 120px;
+  max-width: fit-content;
+  border-radius: 9px;
 `;
 
 export const StyledAlert = styled(Alert)`
+  align-items: center;
   width: 100%;
-  height: 100%;
+  height: 80px;
+  word-wrap: normal;
+  font-size: larger;
 `;

@@ -1,3 +1,5 @@
+import Modal from "../Modal/Modal";
+
 import { PostCardProps } from "./types";
 import {
   StyledPostCardWrapper,
@@ -7,18 +9,43 @@ import {
   Title,
   Description,
   Contact,
-  SubjectLabel
+  SubjectLabel,
 } from "./styles";
-export function PostCard({ subject, image, header, description, contactInfo }: PostCardProps) {
+import exampleImage from "../../assets/logo.png";
+import { useState } from "react";
+
+export function PostCard({
+  subject,
+  image,
+  header,
+  description,
+  contactInfo,
+}: PostCardProps) {
+  const [isImageOpen, setImageOpen] = useState<boolean>(false);
+
+  const onImageClic = (): void => {
+    setImageOpen(true);
+  };
+  const onImageClose = () => setImageOpen(false);
+
+  const photo = image === "N/A" ? exampleImage : image;
+
   return (
     <StyledPostCardWrapper>
+      <Modal
+        isOpen={isImageOpen}
+        onClose={onImageClose}
+        children={<Image src={photo} alt={header} />}
+      />
       <ImageWrapper>
-        <Image src={image} alt={header} />
+        <button type="button" onClick={onImageClic}>
+          <Image src={photo} alt={header} />
+        </button>
       </ImageWrapper>
       <InfoWrapper>
         <Title>{header}</Title>
-        <Contact>{contactInfo}</Contact>
         <Description>{description}</Description>
+        <Contact>{contactInfo}</Contact>
       </InfoWrapper>
       <SubjectLabel>{subject}</SubjectLabel>
     </StyledPostCardWrapper>

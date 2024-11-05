@@ -1,70 +1,72 @@
-import { useEffect, useState } from "react"
-import {PageWrapper}from "../../styles/CommonCss"
-import axios, { Axios } from "axios"
-import { useAppDispatch } from "../../store/hooks"
-import {alertActions} from "../../store/redux/AlertSlice/AlertSlice"
-import { PostCardProps } from "../../components/PostCard/types"
+import { useEffect, useState } from "react";
+import { PageWrapper } from "../../styles/CommonCss";
+import axios from "axios";
+import { useAppDispatch } from "../../store/hooks";
+import { alertActions } from "../../store/redux/AlertSlice/AlertSlice";
+import type { Post, Posts } from "../../pages/AllPosts/types";
 
-// import PostCard from "../../components/PostCard/PostCard";
+import PostCard from "../../components/PostCard/PostCard";
+import exampleImage from "../../assets/logo.png";
 
-function MyPosts () {
-//  const dispatch = useAppDispatch()
-// const [cards, setCards]= useState<PostCardProps[]>([])
+function MyPosts() {
+  const [posts, setPosts] = useState<Posts>([]);
+  const [error, setError] = useState<string | undefined>(undefined);
+  const dispatch = useAppDispatch();
 
-// const getCards = async()=>{
-//         try{
-//         const response = await axios.get("/api/posts/user", {
-//             headers: {
-//               "Content-Type": "multipart/form-data",
-//               Authorization: `Bearer ${localStorage.getItem("token")}`,
-//             },
-//           })
+  const url: string = "/api/posts/user";
 
-//           const getCardsProps = ()=>{
-//             if(response.data.responses.length!==0){
-//                 const cards:PostCardProps[]=[]
+  const getPosts = async () => {
+    try {
+        setError(undefined)
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(response.data.responses)
+      setPosts(response.data.responses);
+      console.log(posts)
 
-//                 response.data.responses.forEach(post:ResponseCard=> {
-//                     const card:PostCardProps={
-//                         image:post.postId,
-//                         subject:post.subject.name,
-// header:post.header,
-// description:post.description,
-// firstName: post.firstName,
-// lastName:post.user.lastName,
-// email:post.user.lastName,
-// phoneNumber:post.user.phoneNumber,
-//                     }
-//                 });
-//             }
+    } catch (e: any) {
+        console.log(e)
+      setError(e.response.data.errorMessage);
+      dispatch(
+        alertActions.setAlertStateOpen({
+          isOpen: true,
+          severity: "error",
+          children: error,
+        })
+      );
+    }
+  };
+  const renderedPosts =
+    posts.length > 0 ? (
+      posts.map((post: Post) => (
+        <PostCard
+          key={post.postId}
+          subject={post.subject.name}
+          header={post.header}
+          description={post.description}
+          contactInfo={`${post.user.firstName} ${post.user.lastName}, ${post.user.email}`}
+          image={post.photoLink || exampleImage}
+        />
+      ))
+    ) : (
+      <p>No posts added yet</p>
+    );
 
-//           }
-//         }
-//         catch(e: any){
-//             const error = e.response.data;
+  useEffect(() => {
+    getPosts();
+  }, []);
 
-//             dispatch(
-//               alertActions.setAlertStateOpen({
-//                 isOpen: true,
-//                 severity: "error",
-//                 children: error.errorMessage,
-//         }))
-
-
-//     }
-
-//     useEffect(()=>{
-//         getCards()
-//     })
-
-
-    return(
-        <>
-        <PageWrapper>
-
-        </PageWrapper>
-        </>
-    )
+  return (
+    <>
+      <PageWrapper>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        {renderedPosts}
+      </PageWrapper>
+    </>
+  );
 }
 
-export default MyPosts
+export default MyPosts;

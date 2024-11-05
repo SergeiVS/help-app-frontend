@@ -1,6 +1,6 @@
 import { FormControl } from "@mui/material"
-import type { RadioGroupProps } from "../../components/radiogroup/types" 
-import { StyledRadioGroup } from "../../components/radiogroup/Styles" 
+import type { RadioGroupProps } from "./types" 
+import { StyledRadioGroup } from "./Styles" 
 
 function RadioGroupComp({ row, name, defaultValue, children, onChange}: RadioGroupProps) {
   return (
