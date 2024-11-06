@@ -6,7 +6,7 @@ export const CardWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  width: 100%;
+  min-width: 100%;
   padding: 12px;
 `;
 
