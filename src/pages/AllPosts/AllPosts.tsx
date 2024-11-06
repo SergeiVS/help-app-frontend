@@ -27,7 +27,6 @@ function AllPosts() {
       console.log(response.data.responses)
       setResult(response.data.responses);
     } catch (error) {
-      console.log(result)
       setError("Error loading data");
     }
   };
@@ -37,7 +36,7 @@ function AllPosts() {
   }, [subject]);
 
   const renderedPosts =
-    result.length > 0 ? (
+    // result.length > 0 ? (
       result.map((post: Post) => (
         <PostCard
           key={post.postId}
@@ -47,10 +46,10 @@ function AllPosts() {
           contactInfo={`${post.user.firstName} ${post.user.lastName}, ${post.user.email}`}
           image={post.photoLink || exampleImage}
         />
-      ))
-    ) : (
-      <p>No posts available</p>
-    );
+      ));
+       // ) : (
+    //   <p>No posts available</p>
+    // );
 
   return (
     <PageWrapper>
