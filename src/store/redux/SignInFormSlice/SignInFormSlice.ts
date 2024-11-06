@@ -1,8 +1,9 @@
-import axios from "axios"
-import { createAppSlice } from "../../createAppSlice"
+import axios from "axios";
+import { createAppSlice } from "../../createAppSlice";
 
-import { SignInState } from "./types"
-import type { LogIn } from "../../../components/SignInForm/types"
+import { SignInState } from "./types";
+import type { LogIn } from "../../../components/SignInForm/types";
+import { PayloadAction } from "@reduxjs/toolkit";
 
 const signInInitialState: SignInState = {
   user: {
@@ -16,13 +17,13 @@ const signInInitialState: SignInState = {
   isPending: false,
   isLoggedOn: false,
   error: undefined,
-}
+};
 
 export const signInFormSlice = createAppSlice({
   name: "SIGN_IN",
   initialState: signInInitialState,
 
-  reducers: create => ({
+  reducers: (create) => ({
     login: create.asyncThunk(
       async (login: LogIn) => {
         let response = await axios.post(
@@ -35,33 +36,33 @@ export const signInFormSlice = createAppSlice({
             headers: {
               "Content-Type": "application/JSON",
             },
-          },
-        )
-        return response
+          }
+        );
+        return response;
       },
       {
         pending: (state: SignInState) => {
-          state.isPending = true
-          state.isLoggedOn = false
-          state.error = ""
+          state.isPending = true;
+          state.isLoggedOn = false;
+          state.error = "";
         },
 
         fulfilled: (state: SignInState, action) => {
           if (action.payload.data.token !== undefined) {
-            localStorage.setItem("token", action.payload.data.token)
+            localStorage.setItem("token", action.payload.data.token);
           }
 
-          state.isPending = false
-          state.isLoggedOn = true
+          state.isPending = false;
+          state.isLoggedOn = true;
         },
 
         rejected: (state: SignInState, action) => {
-          state.error = action.error.message
-          state.isPending = false
-          state.isLoggedOn = false
-          localStorage.removeItem("token")
+          state.error = action.error.message;
+          state.isPending = false;
+          state.isLoggedOn = false;
+          localStorage.removeItem("token");
         },
-      },
+      }
     ),
 
     getUser: create.asyncThunk(
@@ -71,24 +72,24 @@ export const signInFormSlice = createAppSlice({
             "Content-Type": "application/JSON",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        })
-        return response.data
+        });
+        return response.data;
       },
       {
         pending: (state: SignInState) => {
-          state.isPending = true
+          state.isPending = true;
         },
 
         fulfilled: (state: SignInState, action: any) => {
-          state.isPending = false
-          state.isLoggedOn = true
-          state.user = action.payload
+          state.isPending = false;
+          state.isLoggedOn = true;
+          state.user = action.payload;
         },
 
         rejected: (state, action) => {
-          state.error = action.error.message
-          state.isLoggedOn = false
-          state.isPending = false
+          state.error = action.error.message;
+          state.isLoggedOn = false;
+          state.isPending = false;
           state.user = {
             id: signInInitialState.user.id,
             email: signInInitialState.user.email,
@@ -96,15 +97,21 @@ export const signInFormSlice = createAppSlice({
             lastName: signInInitialState.user.lastName,
             phoneNumber: signInInitialState.user.phoneNumber,
             roles: signInInitialState.user.roles,
-          }
+          };
         },
-      },
+      }
+    ),
+    
+    setPending: create.reducer(
+      (state: SignInState, action: PayloadAction<boolean>) => {
+        state.isPending = action.payload;
+      }
     ),
 
     logOut: create.reducer((state: SignInState) => {
-      state.error = signInInitialState.error
-      state.isLoggedOn = false
-      state.isPending = false
+      state.error = signInInitialState.error;
+      state.isLoggedOn = false;
+      state.isPending = false;
       state.user = {
         id: signInInitialState.user.id,
         email: signInInitialState.user.email,
@@ -112,27 +119,27 @@ export const signInFormSlice = createAppSlice({
         lastName: signInInitialState.user.lastName,
         phoneNumber: signInInitialState.user.phoneNumber,
         roles: signInInitialState.user.roles,
-      }
-      localStorage.removeItem("token")
+      };
+      localStorage.removeItem("token");
     }),
   }),
 
   selectors: {
     user: (state: SignInState) => {
-      return state.user
+      return state.user;
     },
     isPending: (state: SignInState) => {
-      return state.isPending
+      return state.isPending;
     },
     isLoggedOn: (state: SignInState) => {
-      return state.isLoggedOn
+      return state.isLoggedOn;
     },
     error: (state: SignInState) => {
-      return state.error
+      return state.error;
     },
   },
-})
+});
 
-export const signInActions = signInFormSlice.actions
+export const signInActions = signInFormSlice.actions;
 
-export const signInSelectors = signInFormSlice.selectors
+export const signInSelectors = signInFormSlice.selectors;

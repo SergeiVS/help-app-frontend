@@ -1,20 +1,21 @@
-import { useFormik } from "formik"
-import * as Yup from "yup"
-import { useNavigate } from "react-router-dom"
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
 
-import Input from "../Input/Input"
-import Button from "../../components/Button/Button"
+import Input from "../Input/Input";
+import Button from "../../components/Button/Button";
 
-import { alertActions } from "../../store/redux/AlertSlice/AlertSlice"
-import { PagesPaths } from "../../components/Layout/types"
-import { StyledSignUpForm, StyledLable, ButtonContainer } from "./styles"
-import axios from "axios"
-import { InputTypes } from "../../components/Input/types"
-import { useAppDispatch } from "../../store/hooks"
+import { alertActions } from "../../store/redux/AlertSlice/AlertSlice";
+import { PagesPaths } from "../../components/Layout/types";
+import { StyledSignUpForm, StyledLable, ButtonContainer } from "./styles";
+import axios from "axios";
+import { InputTypes } from "../../components/Input/types";
+import { useAppDispatch } from "../../store/hooks";
+import { signInActions } from "../../store/redux/SignInFormSlice/SignInFormSlice";
 
 function SignUpForm() {
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First name is missing"),
@@ -23,7 +24,7 @@ function SignUpForm() {
       .email("Data should be in email format")
       .required("Email is missing"),
     password: Yup.string().required("Password is missing").min(8),
-  })
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -39,34 +40,39 @@ function SignUpForm() {
 
     onSubmit: async (values, helpers) => {
       try {
+        dispatch(signInActions.setPending(true));
         const response = await axios.post("/api/auth/signing", {
           firstName: values.firstName,
           lastName: values.lastName,
           phoneNumber: values.phoneNumber,
           email: values.email,
           password: values.password,
-        })
+        });
 
-        dispatch(alertActions.setAlertStateOpen({
-          isOpen: true,
-          severity: "success",
-          children: response.data.message,
-        }))
-       
-        helpers.resetForm()
-        navigate(PagesPaths.SIGNIN)
-        
+        dispatch(
+          alertActions.setAlertStateOpen({
+            isOpen: true,
+            severity: "success",
+            children: response.data.message,
+          })
+        );
+        dispatch(signInActions.setPending(false));
+        helpers.resetForm();
+        navigate(PagesPaths.SIGNIN);
       } catch (e: any) {
-        const error = e.response.data
+        dispatch(signInActions.setPending(false));
+        const error = e.response.data;
 
-        dispatch(alertActions.setAlertStateOpen({
-          isOpen: true,
-          severity: "error",
-          children: error.errorMessage,
-        }))
+        dispatch(
+          alertActions.setAlertStateOpen({
+            isOpen: true,
+            severity: "error",
+            children: error.errorMessage,
+          })
+        );
       }
     },
-  })
+  });
 
   return (
     <>
@@ -114,6 +120,6 @@ function SignUpForm() {
         </ButtonContainer>
       </StyledSignUpForm>
     </>
-  )
+  );
 }
-export default SignUpForm
+export default SignUpForm;

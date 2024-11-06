@@ -1,10 +1,8 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 import {
-  StyledModal,
-  StyledAlert,
   LayoutWrapper,
   Header,
   LogoDiv,
@@ -17,74 +15,102 @@ import {
   IconControl,
   Icon,
   Footer,
-} from "./styles"
+} from "./styles";
 
-import Button from "../../components/Button/Button"
+import Button from "../../components/Button/Button";
+import AlertComp from "../AlertComp/AlertComp";
 
-import myaccount from "../../assets/myaccount.png"
-import myposts from "../../assets/myposts.png"
-import newpost from "../../assets/createpost.png"
+import myaccount from "../../assets/myaccount.png";
+import myposts from "../../assets/myposts.png";
+import newpost from "../../assets/createpost.png";
 
-import { LayoutProps, PagesPaths } from "./types"
-import logo from "../../assets/logo.png"
+import { LayoutProps, PagesPaths } from "./types";
+import logo from "../../assets/logo.png";
 
-import CloseIcon from "@mui/icons-material/Close"
-import { alertSelectors, alertActions } from "../../store/redux/AlertSlice/AlertSlice"
+import {
+  alertSelectors,
+  alertActions,
+} from "../../store/redux/AlertSlice/AlertSlice";
 import {
   signInActions,
   signInSelectors,
-} from "../../store/redux/SignInFormSlice/SignInFormSlice"
-import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { IconButton } from "@mui/material"
+} from "../../store/redux/SignInFormSlice/SignInFormSlice";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import Spinner from "../Spinner/Spinner";
 
 function Layout({ children }: LayoutProps) {
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
-  const isLoggedOn = useAppSelector(signInSelectors.isLoggedOn)
-  const [modalOpen, setModalOpen] = useState(false)
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isLoggedOn = useAppSelector(signInSelectors.isLoggedOn);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [progress, setProgress] = useState<number>(5);
+  const [isPending, setPending] = useState<boolean>(false);
 
-  const isModalOpen = useAppSelector(alertSelectors.isOpen)
-  const severity = useAppSelector(alertSelectors.severity)
-  const message = useAppSelector(alertSelectors.cildren)
-
+  const pending: boolean = useAppSelector(signInSelectors.isPending);
+  const isModalOpen = useAppSelector(alertSelectors.isOpen);
+  const severity = useAppSelector(alertSelectors.severity);
+  const message = useAppSelector(alertSelectors.cildren);
 
   useEffect(() => {
     if (isModalOpen) {
-      setModalOpen(true)
-      setTimeout(() => dispatch(alertActions.closeAlert()), 5000)
+      setModalOpen(true);
+      setTimeout(() => dispatch(alertActions.closeAlert()), 5000);
     } else {
-      setModalOpen(false)
+      setModalOpen(false);
     }
-  }, [isModalOpen])
+  }, [isModalOpen]);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      setProgress(7);
+      const timer = setInterval(() => {
+        setProgress((prevProgress) =>
+          prevProgress >= 100 ? 0 : prevProgress + 5
+        );
+      }, 250);
+
+      return () => {
+        clearInterval(timer);
+      };
+    }
+  }, [isModalOpen]);
+
+  useEffect(() => {
+    if (pending) {
+      setPending(true);
+    } else {
+      setPending(false);
+    }
+  }, [pending]);
 
   const closeModal = () => {
-    setModalOpen(false)
-    dispatch(alertActions.closeAlert())
-  }
+    setModalOpen(false);
+    dispatch(alertActions.closeAlert());
+  };
 
   const goToHomePage = () => {
-    navigate(PagesPaths.HOME)
-  }
+    navigate(PagesPaths.HOME);
+  };
 
   const goToSignUp = () => {
-    navigate("/signup")
-  }
+    navigate("/signup");
+  };
 
   const signOut = () => {
-    dispatch(signInActions.logOut())
-    navigate("/home")
-  }
+    dispatch(signInActions.logOut());
+    navigate("/home");
+  };
 
   return (
     <LayoutWrapper>
-      <StyledModal open={modalOpen} onClose={closeModal}>
-        <StyledAlert severity={severity}>
-          {message}
-          <IconButton onClick={closeModal}>
-            <CloseIcon />
-          </IconButton>
-        </StyledAlert>
-      </StyledModal>
+      <AlertComp
+        isOpen={modalOpen}
+        severity={severity}
+        children={message}
+        progress={progress}
+        onClose={closeModal}
+      />
+      {isPending && <Spinner />}
       <Header>
         <LogoDiv onClick={goToHomePage}>
           <LogoImg src={logo}></LogoImg>
@@ -178,7 +204,7 @@ function Layout({ children }: LayoutProps) {
         <p>Manage Cookies</p>
       </Footer>
     </LayoutWrapper>
-  )
+  );
 }
 
-export default Layout
+export default Layout;

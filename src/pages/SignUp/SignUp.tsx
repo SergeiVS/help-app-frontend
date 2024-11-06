@@ -1,6 +1,6 @@
-import { PageWrapper } from "./styles"
+import { PageWrapper } from "../../styles/CommonCss";
 
-import SignUpForm from "../../components/SingUpForm/SignUpForm"
+import SignUpForm from "../../components/SingUpForm/SignUpForm";
 
 function SignUp() {
   return (
@@ -9,7 +9,7 @@ function SignUp() {
         <SignUpForm />
       </PageWrapper>
     </>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;

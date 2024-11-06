@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import { colors } from "./colors";
+import styled from "@emotion/styled";
 
 export const FormsCss = css`
  display: flex;
@@ -14,5 +15,12 @@ export const FormsCss = css`
   height: fit-content;
   background-color: ${colors.LIGHTBLUE};
   border-radius: 9px;
-  
+`
+export const PageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 120px;
 `
