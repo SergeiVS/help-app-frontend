@@ -3,8 +3,8 @@ import { Alert, Modal } from "@mui/material";
 
 export const StyledModal = styled(Modal)`
   position: absolute;
-  top: 50%;
-  left: 20%;
+  top: 45%;
+  left: 38%;
   width: 450px;
   min-height: 120px;
   max-width: fit-content;
