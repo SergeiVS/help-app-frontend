@@ -8,10 +8,9 @@ import {
   Picture,
   ButtonContainer,
   PictureControl,
-} from "./styles"
+} from "./styles";
 
-import Button from "../../components/Button/Button"
-import picture from "../../assets/aboutusimage.jpg"
+import Button from "../../components/Button/Button";
 
 function Home() {
   const navigate = useNavigate();
@@ -35,15 +34,17 @@ function Home() {
             sanctus est Lorem ipsum dolor sit amet.
           </AboutUsText>
           <ButtonContainer>
-            <Button isRegularButton onClick={goToSignIN}>Sign In</Button>
+            <Button isRegularButton onClick={goToSignIN}>
+              Sign In
+            </Button>
           </ButtonContainer>
         </AboutUs>
         <PictureControl>
-          <Picture src={picture}></Picture>
+          <Picture src="https://demo-shop-files.fra1.digitaloceanspaces.com/help-app-images/dd9e55a2-a573-42bc-aa82-e59675dddc0b..jpg"></Picture>
         </PictureControl>
       </PageWrapper>
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;
