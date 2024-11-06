@@ -212,5 +212,3 @@
 - **HTTP Status**: `200 OK`
 - **Страница на фронтенде**: Удаление Пользователя.
 
-https://demo-shop-files.fra1.cdn.digitaloceanspaces.com/5a604c68-fcb2-47b1-b125-4c64f7438c25..jpeg
-https://demo-shop-files.fra1.digitaloceanspaces.com/help-app-images/5a604c68-fcb2-47b1-b125-4c64f7438c25..jpeg
