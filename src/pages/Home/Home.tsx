@@ -40,7 +40,7 @@ function Home() {
           </ButtonContainer>
         </AboutUs>
         <PictureControl>
-          <Picture src="https://demo-shop-files.fra1.digitaloceanspaces.com/help-app-images/dd9e55a2-a573-42bc-aa82-e59675dddc0b..jpg"></Picture>
+          <Picture src="https://demo-shop-files.fra1.digitaloceanspaces.com/dd9e55a2-a573-42bc-aa82-e59675dddc0b..jpg"></Picture>
         </PictureControl>
       </PageWrapper>
     </>
