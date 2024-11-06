@@ -213,20 +213,21 @@
 - **Страница на фронтенде**: Удаление Пользователя.
 
      
- src/components/Account/Account.tsx(7,19): error TS2307: Cannot find module '../Input/Input' or its corresponding type declarations.
-[help-app-frontend] [2024-11-06 17:22:59] │        src/components/CreatePostForm/CreatePostForm.tsx(10,19): error TS2307: Cannot find module '../Input/Input' or its corresponding type declarations.
-[help-app-frontend] [2024-11-06 17:22:59] │        src/components/SignInForm/SignInForm.tsx(5,19): error TS2307: Cannot find module '../Input/Input' or its corresponding type declarations.
-[help-app-frontend] [2024-11-06 17:22:59] │        src/components/SingUpForm/SignUpForm.tsx(5,19): error TS2307: Cannot find module '../Input/Input' or its corresponding type declarations.
-[help-app-frontend] [2024-11-06 17:22:59] │ 
-[help-app-frontend] [2024-11-06 17:22:59] │ -----> Build failed
-[help-app-frontend] [2024-11-06 17:22:59] │        
-[help-app-frontend] [2024-11-06 17:22:59] │        We're sorry this build is failing! You can troubleshoot common issues here:
-[help-app-frontend] [2024-11-06 17:22:59] │        https://devcenter.heroku.com/articles/troubleshooting-node-deploys
-[help-app-frontend] [2024-11-06 17:22:59] │        
-[help-app-frontend] [2024-11-06 17:22:59] │        Some possible problems:
-[help-app-frontend] [2024-11-06 17:22:59] │        
-[help-app-frontend] [2024-11-06 17:22:59] │        - Node version not specified in package.json
-[help-app-frontend] [2024-11-06 17:22:59] │          https://devcenter.heroku.com/articles/nodejs-support#specifying-a-node-js-version
-[help-app-frontend] [2024-11-06 17:22:59] │        
-[help-app-frontend] [2024-11-06 17:22:59] │        - A module may be missing from 'dependencies' in package.json
-[help-app-frontend] [2024-11-06 17:22:59] │          https://devcenter.
+  src/components/Account/Account.tsx(7,19): error TS2307: Cannot find module '../Input/Input' or its corresponding type declarations.
+[help-app-frontend] [2024-11-06 17:36:49] │        src/components/CreatePostForm/CreatePostForm.tsx(10,19): error TS2307: Cannot find module '../Input/Input' or its corresponding type declarations.
+[help-app-frontend] [2024-11-06 17:36:49] │        src/components/SignInForm/SignInForm.tsx(5,19): error TS2307: Cannot find module '../Input/Input' or its corresponding type declarations.
+[help-app-frontend] [2024-11-06 17:36:49] │        src/components/SingUpForm/SignUpForm.tsx(5,19): error TS2307: Cannot find module '../Input/Input' or its corresponding type declarations.
+[help-app-frontend] [2024-11-06 17:36:49] │ 
+[help-app-frontend] [2024-11-06 17:36:49] │ -----> Build failed
+[help-app-frontend] [2024-11-06 17:36:49] │        
+[help-app-frontend] [2024-11-06 17:36:49] │        We're sorry this build is failing! You can troubleshoot common issues here:
+[help-app-frontend] [2024-11-06 17:36:49] │        https://devcenter.heroku.com/articles/troubleshooting-node-deploys
+[help-app-frontend] [2024-11-06 17:36:49] │        
+[help-app-frontend] [2024-11-06 17:36:49] │        Some possible problems:
+[help-app-frontend] [2024-11-06 17:36:49] │        
+[help-app-frontend] [2024-11-06 17:36:49] │        - Node version not specified in package.json
+[help-app-frontend] [2024-11-06 17:36:49] │          https://devcenter.heroku.com/articles/nodejs-support#specifying-a-node-js-version
+[help-app-frontend] [2024-11-06 17:36:49] │        
+[help-app-frontend] [2024-11-06 17:36:49] │        - A module may be missing from 'dependencies' in package.json
+[help-app-frontend] [2024-11-06 17:36:49] │          https://devcenter.heroku.com/articles/troubleshooting-node-deploys#ensure-you-aren-t-relying-on-untracked-dependencies
+[help-app-frontend] [2024-11-06 17:36:49] │        
