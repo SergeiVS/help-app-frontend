@@ -3,19 +3,10 @@ import styled from "@emotion/styled"
 import { colors } from "../../styles/colors"
 
 
-export const PageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  align-items: left;
-  justify-content: start;
-  padding: 120px;
-`
-
 export const PostsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
   height: fit-content;
   align-items: center;
   justify-content: center;

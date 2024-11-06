@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 
-import Input from "../Input/Input";
+import Input from "../Input/Input"
 import Button from "../../components/Button/Button";
 
 import { alertActions } from "../../store/redux/AlertSlice/AlertSlice";

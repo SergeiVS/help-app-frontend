@@ -1,5 +1,6 @@
-import { Route, Routes } from "react-router-dom";
-import { useEffect } from "react";
+import { Route, Routes} from "react-router-dom"
+import { useEffect } from "react"
+
 
 import Layout from "./components/Layout/Layout";
 import { PagesPaths } from "./components/Layout/types";
@@ -30,6 +31,7 @@ function App() {
     <>
       <Layout>
         <Routes>
+          <Route path="/" element={<Home />}></Route>
           <Route path={PagesPaths.HOME} element={<Home />}></Route>
           <Route path={PagesPaths.SIGNIN} element={<SignIn />}></Route>
           <Route path={PagesPaths.SIGNUP} element={<SignUp />}></Route>

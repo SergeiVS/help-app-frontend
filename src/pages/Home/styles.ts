@@ -7,7 +7,7 @@ export const PageWrapper = styled.div`
   height: 460px;
   background-color: ${colors.LIGHTBLUE};
   justify-content: left;
-  padding-left: 130px;
+  padding-left: 250px;
   padding-right: 130px;
   gap: 100px;
 `
@@ -16,7 +16,7 @@ export const AboutUs = styled.div `
   display: flex;
   flex-direction: column;
   height: 500px;
-  width: 500px;
+  width: 615px;
   gap: 30px;
   padding-top: 30px;
 `
@@ -32,7 +32,7 @@ export const AboutUsText = styled.p`
 `
 
 export const PictureControl = styled.div`
-  width: 700px;
+  max-width: 700px;
   padding-top: 30px;
 `
 
