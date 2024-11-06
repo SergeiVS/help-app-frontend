@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { PageWrapper } from "../../styles/CommonCss";
+import { PostsWrapper } from "../AllPosts/styles";
 import type { Post, Posts } from "../../pages/AllPosts/types";
 import UserPostCard from "../../components/UserCardComp/UserPostCard";
 
@@ -47,18 +48,20 @@ function MyPosts() {
   return (
     <>
       <PageWrapper>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {posts.length > 0 ? (
-          posts.map((p) => (
-            <UserPostCard
-              post={p}
-              onDelete={onDelete}
-              key={"card-" + p.postId}
-            />
-          ))
-        ) : (
-          <p>No posts added yet</p>
-        )}
+        <PostsWrapper>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          {posts.length > 0 ? (
+            posts.map((p) => (
+              <UserPostCard
+                post={p}
+                onDelete={onDelete}
+                key={"card-" + p.postId}
+              />
+            ))
+          ) : (
+            <p>No posts added yet</p>
+          )}
+        </PostsWrapper>
       </PageWrapper>
     </>
   );

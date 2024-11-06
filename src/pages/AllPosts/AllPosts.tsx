@@ -24,7 +24,6 @@ function AllPosts() {
     try {
       setError(undefined);
       const response = await axios.get<{ responses: Posts }>(url);
-      console.log(response.data.responses)
       setResult(response.data.responses);
     } catch (error) {
       setError("Error loading data");
