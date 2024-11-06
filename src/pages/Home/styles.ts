@@ -32,7 +32,7 @@ export const AboutUsText = styled.p`
 `
 
 export const PictureControl = styled.div`
-  width: 700px;
+  max-width: 700px;
   padding-top: 30px;
 `
 
