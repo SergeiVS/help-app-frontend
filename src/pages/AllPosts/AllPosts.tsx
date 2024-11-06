@@ -27,6 +27,7 @@ function AllPosts() {
       console.log(response.data.responses)
       setResult(response.data.responses);
     } catch (error) {
+      console.log(result)
       setError("Error loading data");
     }
   };
