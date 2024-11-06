@@ -212,3 +212,8 @@
 - **HTTP Status**: `200 OK`
 - **Страница на фронтенде**: Удаление Пользователя.
 
+   src/components/Account/Account.tsx(7,19): error TS2307: Cannot find module '../Input/Input' or its corresponding type declarations.
+[help-app-frontend] [2024-11-06 17:12:39] │        src/components/CreatePostForm/CreatePostForm.tsx(10,19): error TS2307: Cannot find module '../Input/Input' or its corresponding type declarations.
+[help-app-frontend] [2024-11-06 17:12:39] │        src/components/SignInForm/SignInForm.tsx(5,19): error TS2307: Cannot find module '../Input/Input' or its corresponding type declarations.
+[help-app-frontend] [2024-11-06 17:12:39] │        src/components/SingUpForm/SignUpForm.tsx(5,19): error TS2307: Cannot find module '../Input/Input' or its corresponding type declarations.
+[help-app-frontend] [2024-11-06 17:12:39] │ 
