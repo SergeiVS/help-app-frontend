@@ -1,5 +1,6 @@
-import { Route, Routes } from "react-router-dom";
-import { useEffect } from "react";
+import { Route, Routes} from "react-router-dom"
+import { useEffect } from "react"
+
 
 import Layout from "./components/Layout/Layout";
 import { PagesPaths } from "./components/Layout/types";
