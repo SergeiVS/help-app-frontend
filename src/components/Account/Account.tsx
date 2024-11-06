@@ -16,7 +16,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { signInSelectors } from "../../store/redux/SignInFormSlice/SignInFormSlice";
 import { alertActions } from "../../store/redux/AlertSlice/AlertSlice";
-import { InputTypes } from "../../components/Input/types";
+import { InputTypes } from "../Input/types";
 import { User } from "../../store/redux/SignInFormSlice/types";
 
 function Account() {
