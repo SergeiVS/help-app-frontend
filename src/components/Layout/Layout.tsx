@@ -93,12 +93,12 @@ function Layout({ children }: LayoutProps) {
   };
 
   const goToSignUp = () => {
-    navigate("/signup");
+    navigate(PagesPaths.SIGNUP);
   };
 
   const signOut = () => {
     dispatch(signInActions.logOut());
-    navigate("/home");
+    navigate(PagesPaths.HOME);
   };
 
   return (

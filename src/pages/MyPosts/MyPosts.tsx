@@ -49,7 +49,7 @@ const isLogged = useAppSelector(signInSelectors.isLoggedOn);
   
   useEffect(() => {
     if (!isLogged) {
-      navigate("/singin");
+      navigate(PagesPaths.SIGNINFIX);
     }
   }, []);
 

@@ -4,6 +4,7 @@ import CreatePostForm from "../../components/CreatePostForm/CreatePostForm";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { PageWrapper } from "../../styles/CommonCss";
+import { PagesPaths } from "../../components/Layout/types";
 
 function CreatePost() {
   const isLogged = useAppSelector(signInSelectors.isLoggedOn);
@@ -11,7 +12,7 @@ function CreatePost() {
 
   useEffect(() => {
     if (!isLogged) {
-      navigate("/singin");
+      navigate(PagesPaths.SIGNIN);
     }
   }, []);
 

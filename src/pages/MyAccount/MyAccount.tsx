@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useAppSelector } from "../../store/hooks";
 import { useNavigate } from "react-router-dom";
 import { signInSelectors } from "../../store/redux/SignInFormSlice/SignInFormSlice";
+import { PagesPaths } from "../../components/Layout/types";
 
 function MyAccount() {
   const isLogged = useAppSelector(signInSelectors.isLoggedOn);
@@ -11,7 +12,7 @@ function MyAccount() {
 
   useEffect(() => {
     if (!isLogged) {
-      navigate("/singin");
+      navigate(PagesPaths.SIGNIN);
     }
   }, []);
 
