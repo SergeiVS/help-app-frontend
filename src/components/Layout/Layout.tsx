@@ -114,7 +114,7 @@ function Layout({ children }: LayoutProps) {
       <Header>
         <LogoDiv onClick={goToHomePage}>
           <LogoImg src={logo}></LogoImg>
-          <LogoName>Help a hand</LogoName>
+          <LogoName>Helping hand</LogoName>
         </LogoDiv>
         {isLoggedOn ? (
           <NavigationContainer>
