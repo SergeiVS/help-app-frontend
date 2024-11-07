@@ -8,6 +8,7 @@ import UserPostCard from "../../components/UserCardComp/UserPostCard";
 import { useAppSelector } from "../../store/hooks";
 import { signInSelectors } from "../../store/redux/SignInFormSlice/SignInFormSlice";
 import { useNavigate } from "react-router-dom";
+import { PagesPaths } from "../../components/Layout/types";
 
 function MyPosts() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -49,7 +50,7 @@ const isLogged = useAppSelector(signInSelectors.isLoggedOn);
   
   useEffect(() => {
     if (!isLogged) {
-      navigate(PagesPaths.SIGNINFIX);
+      navigate(PagesPaths.SIGNIN);
     }
   }, []);
 
