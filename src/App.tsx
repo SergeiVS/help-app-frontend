@@ -24,7 +24,8 @@ function App() {
   useEffect(() => {
     if (isLoggedOn) {
       dispatch(signInActions.getUser());
-    }
+    }else{localStorage.removeItem("token")}
+    
   }, [isLoggedOn]);
 
   return (
