@@ -27,6 +27,7 @@ function App() {
     }
   }, [isLoggedOn]);
 
+
   return (
     <>
       <Layout>
@@ -35,30 +36,18 @@ function App() {
           <Route path={PagesPaths.HOME} element={<Home />}></Route>
           <Route path={PagesPaths.SIGNIN} element={<SignIn />}></Route>
           <Route path={PagesPaths.SIGNUP} element={<SignUp />}></Route>
-          {isLoggedOn ? (
+          {isLoggedOn && (
             <Route
               path={PagesPaths.CREATEPOST}
               element={<CreatePost />}
             ></Route>
-          ) : (
-            <p style={{ color: "red", fontSize: "18px" }}>
-              You are not authorized. Access denied
-            </p>
           )}
-          {isLoggedOn ? (
+          {isLoggedOn && (
             <Route path={PagesPaths.MYACCOUNT} element={<MyAccount />}></Route>
-          ) : (
-            <p style={{ color: "red", fontSize: "18px" }}>
-              You are not authorized. Access denied
-            </p>
           )}
           <Route path={PagesPaths.ALLPOSTS} element={<AllPosts />}></Route>
-          {isLoggedOn ? (
+          {isLoggedOn && (
             <Route path={PagesPaths.MYPOSTS} element={<MyPosts />}></Route>
-          ) : (
-            <p style={{ color: "red", fontSize: "18px" }}>
-              You are not authorized. Access denied
-            </p>
           )}
         </Routes>
       </Layout>
