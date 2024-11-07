@@ -5,10 +5,16 @@ import { PageWrapper } from "../../styles/CommonCss";
 import { PostsWrapper } from "../AllPosts/styles";
 import type { Post, Posts } from "../../pages/AllPosts/types";
 import UserPostCard from "../../components/UserCardComp/UserPostCard";
+import { useAppSelector } from "../../store/hooks";
+import { signInSelectors } from "../../store/redux/SignInFormSlice/SignInFormSlice";
+import { useNavigate } from "react-router-dom";
 
 function MyPosts() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [error, setError] = useState<string | undefined>(undefined);
+const isLogged = useAppSelector(signInSelectors.isLoggedOn);
+  const navigate = useNavigate();
+  
 
   const url: string = "/api/posts/user";
 
@@ -40,6 +46,13 @@ function MyPosts() {
       setError(e.response.data.errorMessage);
     }
   };
+  
+  useEffect(() => {
+    if (!isLogged) {
+      navigate("/singin");
+    }
+  }, []);
+
 
   useEffect(() => {
     getPosts();
