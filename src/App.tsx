@@ -13,6 +13,7 @@ import CreatePost from "./pages/CreatePost/CreatePost";
 import MyAccount from "./pages/MyAccount/MyAccount";
 import AllPosts from "./pages/AllPosts/AllPosts";
 import MyPosts from "./pages/MyPosts/MyPosts";
+import { useEffect } from "react";
 
 function App() {
   const dispatch = useAppDispatch();
