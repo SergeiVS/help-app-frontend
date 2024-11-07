@@ -1,6 +1,5 @@
-import { Route, Routes} from "react-router-dom"
-import { useEffect } from "react"
-
+import { Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
 
 import Layout from "./components/Layout/Layout";
 import { PagesPaths } from "./components/Layout/types";
@@ -24,8 +23,9 @@ function App() {
   useEffect(() => {
     if (isLoggedOn) {
       dispatch(signInActions.getUser());
-    }else{localStorage.removeItem("token")}
-    
+    } else {
+      localStorage.removeItem("token");
+    }
   }, [isLoggedOn]);
 
   return (
@@ -36,10 +36,19 @@ function App() {
           <Route path={PagesPaths.HOME} element={<Home />}></Route>
           <Route path={PagesPaths.SIGNIN} element={<SignIn />}></Route>
           <Route path={PagesPaths.SIGNUP} element={<SignUp />}></Route>
-          <Route path={PagesPaths.CREATEPOST} element={<CreatePost />}></Route>
-          <Route path={PagesPaths.MYACCOUNT} element={<MyAccount />}></Route>
+          {isLoggedOn && (
+            <Route
+              path={PagesPaths.CREATEPOST}
+              element={<CreatePost />}
+            ></Route>
+          )}
+          {isLoggedOn && (
+            <Route path={PagesPaths.MYACCOUNT} element={<MyAccount />}></Route>
+          )}
           <Route path={PagesPaths.ALLPOSTS} element={<AllPosts />}></Route>
-          <Route path={PagesPaths.MYPOSTS} element={<MyPosts />}></Route>
+          {isLoggedOn && (
+            <Route path={PagesPaths.MYPOSTS} element={<MyPosts />}></Route>
+          )}
         </Routes>
       </Layout>
     </>
