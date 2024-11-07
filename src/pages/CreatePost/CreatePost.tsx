@@ -2,6 +2,7 @@ import { PageWrapper } from "../../styles/CommonCss";
 
 import { useAppSelector } from "../../store/hooks";
 import { signInSelectors } from "../../store/redux/SignInFormSlice/SignInFormSlice";
+import { StyledErrorMessage } from "../../styles/CommonCss";
 import CreatePostForm from "../../components/CreatePostForm/CreatePostForm";
 
 function CreatePost() {
@@ -9,7 +10,7 @@ function CreatePost() {
   const loginAccessRender = isLogged ? (
     <CreatePostForm />
   ) : (
-    <p style={{ color: "red", fontSize: "larger" }}>Access denied</p>
+    <StyledErrorMessage>Access denied</StyledErrorMessage>
   );
 
   return (

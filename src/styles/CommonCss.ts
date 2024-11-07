@@ -25,3 +25,7 @@ export const PageWrapper = styled.div`
   padding-right: 250px;
   padding-top: 70px;
 `
+export const StyledErrorMessage= styled.p`
+font-size: larger;
+color: red;
+`
