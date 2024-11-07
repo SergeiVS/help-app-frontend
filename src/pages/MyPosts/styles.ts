@@ -6,7 +6,7 @@ export const CardWrapper = styled.div`
   align-items: center;
   gap: 20px;
   min-width: 100%;
-  padding: 12px;
+  /* padding: 12px; */
 `;
 
 export const ButtonsContainer = styled.div`
@@ -16,7 +16,7 @@ export const ButtonsContainer = styled.div`
   gap: 15px;
   min-width: 100%;
   height: 70px;
-  padding: 15px;
+  /* padding: 15px; */
 `;
 
 export const ButtonConraiver = styled.div`
