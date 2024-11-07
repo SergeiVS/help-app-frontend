@@ -35,19 +35,10 @@ function App() {
           <Route path={PagesPaths.HOME} element={<Home />}></Route>
           <Route path={PagesPaths.SIGNIN} element={<SignIn />}></Route>
           <Route path={PagesPaths.SIGNUP} element={<SignUp />}></Route>
-          {isLoggedOn && (
-            <Route
-              path={PagesPaths.CREATEPOST}
-              element={<CreatePost />}
-            ></Route>
-          )}
-          {isLoggedOn && (
-            <Route path={PagesPaths.MYACCOUNT} element={<MyAccount />}></Route>
-          )}
+          <Route path={PagesPaths.CREATEPOST} element={<CreatePost />}></Route>
+          <Route path={PagesPaths.MYACCOUNT} element={<MyAccount />}></Route>
           <Route path={PagesPaths.ALLPOSTS} element={<AllPosts />}></Route>
-          {isLoggedOn && (
-            <Route path={PagesPaths.MYPOSTS} element={<MyPosts />}></Route>
-          )}
+          <Route path={PagesPaths.MYPOSTS} element={<MyPosts />}></Route>
         </Routes>
       </Layout>
     </>
